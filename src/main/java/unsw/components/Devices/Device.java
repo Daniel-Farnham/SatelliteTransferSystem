@@ -48,7 +48,6 @@ public class Device {
         files.add(new unsw.components.Files.File(filename, content));
 
     }
-
     
     public List<File> getDeviceFiles() {
         return files;

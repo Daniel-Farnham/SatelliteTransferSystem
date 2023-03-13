@@ -140,17 +140,19 @@ public class BlackoutController {
     *
     * @param id the ID of the device or satellite to retrieve information for
     * @return an EntityInfoResponse object containing the relevant information, or null if the ID is not found
-    */
+ */
     public EntityInfoResponse getInfo(String id) {
         EntityInfoResponse response = null;
 
         for (Device device : devices) {
             if (device.getDeviceId().equals(id)) {
                 
+                // If a matching device is found, create a list of FileInfoResponse objects for its files
                 List<File> files = device.getDeviceFiles();
                 List<FileInfoResponse> fileResponses = new ArrayList<>();
 
                 for (File file : files) {
+                    // Create a FileInfoResponse object for each file
                     FileInfoResponse fileResponse = new FileInfoResponse(
                     file.getFilename(),
                     file.getContent(), 
