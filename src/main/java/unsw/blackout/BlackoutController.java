@@ -3,43 +3,154 @@ package unsw.blackout;
 import java.util.ArrayList;
 import java.util.List;
 
+import unsw.components.Devices.Device;
+import unsw.components.Satellites.Satellite; 
 import unsw.response.models.EntityInfoResponse;
 import unsw.utils.Angle;
 
+
 public class BlackoutController {
+    private List<Device> devices;
+    private List<Satellite> satellites; 
+
+    public BlackoutController() {
+        devices = new ArrayList<>();
+        satellites = new ArrayList<>(); 
+    }
+
+    /*
+     * Returns list of Devices
+     */
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    /*
+     * Returns list of Satellites
+     */
+    public List<Satellite> getSatellites() {
+        return satellites; 
+    }
+
+    /**
+     * Creates a new device with the given ID, type, and position.
+     * @param deviceId The ID of the new device.
+     * @param type The type of the new device.
+     * @param position The position of the new device.
+     */
     public void createDevice(String deviceId, String type, Angle position) {
-        // TODO: Task 1a)
+        Device newDevice = new Device(deviceId, type, position); 
+        devices.add(newDevice); 
     }
 
+    /**
+     * Removes a device with the specified ID.
+     * @param deviceId The ID of the device to be removed.
+     */
     public void removeDevice(String deviceId) {
-        // TODO: Task 1b)
+        for (int i = 0; i < devices.size(); i++) {
+            Device device = devices.get(i);
+            if (device.getDeviceId().equals(deviceId)) {
+                devices.remove(i);
+                return;
+            }
+        }
     }
 
+    /**
+     * Creates a new satellite with the given ID, type, height, and position.
+     * @param satelliteId The ID of the new satellite.
+     * @param type The type of the new satellite.
+     * @param height The height of the new satellite.
+     * @param position The position of the new satellite.
+     */
     public void createSatellite(String satelliteId, String type, double height, Angle position) {
-        // TODO: Task 1c)
+        Satellite newSatellite = new Satellite(satelliteId, type, height, position);
+        satellites.add(newSatellite); 
     }
 
+    /**
+     * Removes a satellite with the specified ID.
+     * @param satelliteId The ID of the satellite to be removed.
+     */
     public void removeSatellite(String satelliteId) {
-        // TODO: Task 1d)
+        for (int i = 0; i < satellites.size(); i++) {
+            Satellite satellite = satellites.get(i);
+            if (satellite.getSatelliteId().equals(satelliteId)) {
+                satellites.remove(i);
+                return;
+            }
+        }
     }
 
+    /**
+     * Returns a list of all device IDs.
+     * @return A list of all device IDs.
+     */
     public List<String> listDeviceIds() {
-        // TODO: Task 1e)
-        return new ArrayList<>();
+        List<String> deviceIds = new ArrayList<>();
+        for (Device device : devices) {
+            deviceIds.add(device.getDeviceId());
+        }
+        return deviceIds;
     }
 
+    /**
+     * Returns a list of all satellite IDs.
+     * @return A list of all satellite IDs.
+     */
     public List<String> listSatelliteIds() {
-        // TODO: Task 1f)
-        return new ArrayList<>();
+        List<String> satelliteIds = new ArrayList<>();
+        for (Satellite satellite : satellites) {
+            satelliteIds.add(satellite.getSatelliteId());
+        }
+        return satelliteIds;
     }
 
+    /**
+    * Adds a file to the device with the specified ID.
+    * 
+    * @param deviceId the ID of the device to add the file to
+    * @param filename the name of the file to add
+    * @param content the contents of the file to add
+    */
     public void addFileToDevice(String deviceId, String filename, String content) {
-        // TODO: Task 1g)
+        Device targetDevice = null; 
+
+        for (Device device : devices) {
+            if (device.getDeviceId().equals(deviceId)) {
+                targetDevice = device; 
+                break; 
+            }
+        }
+
+        targetDevice.addFile(filename, content); 
+        System.out.println("File added succesfully");
+        
     }
 
     public EntityInfoResponse getInfo(String id) {
-        // TODO: Task 1h)
+        EntityInfoResponse response = null;
+
+        for (Device device : devices) {
+            if (device.getDeviceId().equals(id)) {
+                response = new EntityInfoResponse(
+                device.getDeviceId(),
+                device.getPosition(),
+                0.0, // Devices don't have a height
+                device.getDeviceType()
+                );
+            }
+        }
+    
+        for (Satellite satellite : satellites) {
+            /* 
+            if (satellite.getSatelliteId().equals(id)) {
+                return new EntityInfoResponse(satellite.getSatelliteId(), satellite.getType(), satellite.getPosition());
+            }
+        }
         return null;
+        */
     }
 
     public void simulate() {

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import unsw.blackout.BlackoutController;
+import unsw.components.Devices.Device;
 import unsw.response.models.EntityInfoResponse;
 import unsw.response.models.FileInfoResponse;
 import unsw.utils.Angle;
@@ -20,6 +21,20 @@ import static unsw.utils.MathsHelper.RADIUS_OF_JUPITER;
 
 @TestInstance(value = Lifecycle.PER_CLASS)
 public class Task1ExampleTests {
+
+    @Test 
+    public void createDevice() {
+        BlackoutController controller = new BlackoutController(); 
+        
+        controller.createDevice("DeviceA", "HandheldDevice", Angle.fromDegrees(30));
+
+        Device device = controller.getDevices().get(0);
+        assertEquals("DeviceA", device.getDeviceId());
+        assertEquals("HandheldDevice", device.getDeviceType());
+        //assertEquals(30, device.getPosition());
+
+    }
+
     @Test
     public void testExample() {
         // Task 1
