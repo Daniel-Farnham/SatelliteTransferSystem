@@ -3,6 +3,7 @@ package unsw.components.Devices;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import unsw.components.Files.File;
 import unsw.utils.Angle;
 
@@ -45,10 +46,13 @@ public class Device {
 
     public void addFile(String filename, String content) {
         files.add(new unsw.components.Files.File(filename, content));
+
     }
 
-    public List<File> getFiles() {
+    
+    public List<File> getDeviceFiles() {
         return files;
     }
+    
 
 }

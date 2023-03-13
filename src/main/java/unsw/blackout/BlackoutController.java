@@ -2,10 +2,16 @@ package unsw.blackout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import unsw.components.Devices.Device;
 import unsw.components.Satellites.Satellite; 
+import unsw.components.Files.File;
 import unsw.response.models.EntityInfoResponse;
+import unsw.response.models.FileInfoResponse;
+
+import static unsw.utils.MathsHelper.RADIUS_OF_JUPITER;
 import unsw.utils.Angle;
 
 
@@ -129,28 +135,61 @@ public class BlackoutController {
         
     }
 
+    /**
+    * Retrieves information about either a device or a satellite based on the input ID.
+    *
+    * @param id the ID of the device or satellite to retrieve information for
+    * @return an EntityInfoResponse object containing the relevant information, or null if the ID is not found
+    */
     public EntityInfoResponse getInfo(String id) {
         EntityInfoResponse response = null;
 
         for (Device device : devices) {
             if (device.getDeviceId().equals(id)) {
+                
+                List<File> files = device.getDeviceFiles();
+                List<FileInfoResponse> fileResponses = new ArrayList<>();
+
+                for (File file : files) {
+                    FileInfoResponse fileResponse = new FileInfoResponse(
+                    file.getFilename(),
+                    file.getContent(), 
+                    file.getFilesize(),
+                    file.transferComplete()
+                );
+                fileResponses.add(fileResponse);
+                }
+                
+                // Create a map from the list of FileInfoResponse objects
+                Map<String, FileInfoResponse> fileMap = new HashMap<>();
+                for (FileInfoResponse fileResponse : fileResponses) {
+                    fileMap.put(fileResponse.getFilename(), fileResponse);
+                }
+
                 response = new EntityInfoResponse(
                 device.getDeviceId(),
                 device.getPosition(),
-                0.0, // Devices don't have a height
-                device.getDeviceType()
+                RADIUS_OF_JUPITER, 
+                device.getDeviceType(),
+                fileMap
                 );
+                break;
             }
         }
-    
+        
         for (Satellite satellite : satellites) {
-            /* 
             if (satellite.getSatelliteId().equals(id)) {
-                return new EntityInfoResponse(satellite.getSatelliteId(), satellite.getType(), satellite.getPosition());
+                response = new EntityInfoResponse(
+                satellite.getSatelliteId(),
+                satellite.getPosition(),
+                satellite.getHeight(),
+                satellite.getSatelliteType()
+                );
+                break;
             }
         }
-        return null;
-        */
+            
+        return response; 
     }
 
     public void simulate() {
