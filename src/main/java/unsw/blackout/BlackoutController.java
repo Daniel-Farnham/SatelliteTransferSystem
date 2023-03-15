@@ -6,7 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import unsw.components.Devices.Device;
-import unsw.components.Satellites.Satellite; 
+import unsw.components.Devices.HandheldDevice;
+import unsw.components.Devices.LaptopDevice;
+import unsw.components.Devices.DesktopDevice;
+import unsw.components.Satellites.Satellite;
+import unsw.components.Satellites.StandardSatellite;
+import unsw.components.Satellites.TeleportingSatellite;
+import unsw.components.Satellites.RelaySatellite;
 import unsw.components.Files.File;
 import unsw.response.models.EntityInfoResponse;
 import unsw.response.models.FileInfoResponse;
@@ -45,8 +51,24 @@ public class BlackoutController {
      * @param position The position of the new device.
      */
     public void createDevice(String deviceId, String type, Angle position) {
+        if (type == "HandheldDevice") {
+            HandheldDevice newHandheldDevice = new HandheldDevice(deviceId, position);
+            devices.add(newHandheldDevice);    
+        }
+        
+        if (type == "LaptopDevice") {
+            LaptopDevice newLaptopDevice = new LaptopDevice(deviceId, position);
+            devices.add(newLaptopDevice);   
+        }
+
+        if (type == "DesktopDevice") {
+            DesktopDevice newDesktopDevice = new DesktopDevice(deviceId, position);
+            devices.add(newDesktopDevice);   
+        }
+        /* 
         Device newDevice = new Device(deviceId, type, position); 
         devices.add(newDevice); 
+        */
     }
 
     /**
@@ -71,8 +93,24 @@ public class BlackoutController {
      * @param position The position of the new satellite.
      */
     public void createSatellite(String satelliteId, String type, double height, Angle position) {
+        if (type == "StandardSatellite") {
+            StandardSatellite newStandardSatellite = new StandardSatellite(satelliteId, height, position);
+            satellites.add(newStandardSatellite); 
+        }
+
+        if (type == "TeleportingSatellite") {
+            TeleportingSatellite newTeleportingSatellite = new TeleportingSatellite(satelliteId, height, position);
+            satellites.add(newTeleportingSatellite);
+        }
+
+        if (type == "RelaySatellite") {
+            RelaySatellite newRelaySatellite = new RelaySatellite(satelliteId, height, position);
+            satellites.add(newRelaySatellite);
+        }
+        /* 
         Satellite newSatellite = new Satellite(satelliteId, type, height, position);
         satellites.add(newSatellite); 
+        */
     }
 
     /**
@@ -195,6 +233,9 @@ public class BlackoutController {
     }
 
     public void simulate() {
+        for (Satellite satellite : satellites) {
+            satellite.updatePosition();
+        }
         // TODO: Task 2a)
     }
 

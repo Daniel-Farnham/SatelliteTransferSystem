@@ -192,4 +192,29 @@ public class Task2ExampleTests {
         // Verify that Satellite1 is now at theta=0
         assertTrue(controller.getInfo("Satellite1").getPosition().toDegrees() % 360 == 0);
     }
+
+
+    @Test 
+    public void testTeleportingMovementOneIncrement() {
+        BlackoutController controller = new BlackoutController();
+
+        controller.createSatellite("Satellite1", "StandardSatellite", 10000 + RADIUS_OF_JUPITER,
+        Angle.fromDegrees(360));
+        controller.createSatellite("Satellite2", "TeleportingSatellite", 10000 + RADIUS_OF_JUPITER,
+        Angle.fromDegrees(360));
+        controller.createSatellite("Satellite3", "RelaySatellite", 10000 + RADIUS_OF_JUPITER,
+        Angle.fromDegrees(360));
+
+        System.out.println(controller.getInfo("Satellite1"));
+        System.out.println(controller.getInfo("Satellite2"));
+        System.out.println(controller.getInfo("Satellite3"));
+
+        controller.simulate(1); 
+
+        System.out.println(controller.getInfo("Satellite1"));
+        System.out.println(controller.getInfo("Satellite2"));
+        System.out.println(controller.getInfo("Satellite3"));
+
+    }
 }
+

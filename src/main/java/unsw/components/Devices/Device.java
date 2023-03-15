@@ -46,7 +46,6 @@ public class Device {
 
     public void addFile(String filename, String content) {
         files.add(new unsw.components.Files.File(filename, content));
-
     }
     
     public List<File> getDeviceFiles() {
