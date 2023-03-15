@@ -78,15 +78,20 @@ public class StandardSatellite extends Satellite {
         // angularVelocity * minute = radians 
     }
 
-    // Might need to check changing from degrees to radians and back again
-    // might also need to check direction
-    // also need to make considerations for 
+
     public void updatePosition() {
-        Angle angleChange = Angle.fromRadians(getAngularVelocity() * 1); 
+        Angle angleChange = Angle.fromRadians(-getAngularVelocity() * 1); 
         Angle newPosition = getPosition().add(angleChange);
+        // Check if newPosition is less than 0 or more than 360 degrees. 
+        double degrees = newPosition.toDegrees();
+        if (degrees < 0) {
+            degrees += 360; 
+        }
+        newPosition = Angle.fromDegrees(degrees);
         setPosition(newPosition);
+    
     }
-    // Calculate angular velocity. Assume Angle is in radians. 
+    
 
     
 }

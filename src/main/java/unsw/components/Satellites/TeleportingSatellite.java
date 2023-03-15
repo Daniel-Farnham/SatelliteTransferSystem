@@ -10,6 +10,7 @@ public class TeleportingSatellite extends Satellite {
     private static final int BYTES_PER_MINUTE_RECEIVE = 15;
     private static final int BYTES_PER_MINUTE_SEND = 10;
     private static final char T_CHARACTER = 't';
+    private boolean isDirectionClockwise = false; 
     //Device support? 
 
     public TeleportingSatellite(String id, Double height, Angle position) {
@@ -45,13 +46,33 @@ public class TeleportingSatellite extends Satellite {
         // angularVelocity * minute = radians 
     }
 
-    // Might need to check changing from degrees to radians and back again
-    // might also need to check direction
-    // also need to make considerations for 
     public void updatePosition() {
-        Angle angleChange = Angle.fromRadians(getAngularVelocity() * 1); 
-        Angle newPosition = getPosition().add(angleChange);
-        setPosition(newPosition);
+        if (!isDirectionClockwise) {
+            Angle angleChange = Angle.fromRadians(getAngularVelocity() * 1); 
+            Angle newPosition = getPosition().add(angleChange);
+            double degrees = newPosition.toDegrees();
+            if (degrees > 180) {
+                setPosition(Angle.fromDegrees(0)); 
+                isDirectionClockwise = true;
+            }
+            else {
+                setPosition(newPosition);
+            }
+        }
+
+        if (isDirectionClockwise) {
+            Angle angleChange = Angle.fromRadians(-getAngularVelocity() * 1); 
+            Angle newPosition = getPosition().add(angleChange);
+            double degrees = newPosition.toDegrees();
+            if (degrees < 180) {
+                setPosition(Angle.fromDegrees(0)); 
+                isDirectionClockwise = false;
+            }
+            else {
+                setPosition(newPosition);
+            }
+        }  
+
     }
-    // Calculate angular velocity. Assume Angle is in radians. 
+   
 }

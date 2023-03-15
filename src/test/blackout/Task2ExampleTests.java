@@ -199,20 +199,33 @@ public class Task2ExampleTests {
         BlackoutController controller = new BlackoutController();
 
         controller.createSatellite("Satellite1", "StandardSatellite", 10000 + RADIUS_OF_JUPITER,
-        Angle.fromDegrees(360));
+        Angle.fromDegrees(5));
         controller.createSatellite("Satellite2", "TeleportingSatellite", 10000 + RADIUS_OF_JUPITER,
         Angle.fromDegrees(360));
         controller.createSatellite("Satellite3", "RelaySatellite", 10000 + RADIUS_OF_JUPITER,
-        Angle.fromDegrees(360));
+        Angle.fromDegrees(345));
 
-        System.out.println(controller.getInfo("Satellite1"));
-        System.out.println(controller.getInfo("Satellite2"));
+     
         System.out.println(controller.getInfo("Satellite3"));
 
-        controller.simulate(1); 
+        controller.simulate(30); 
 
-        System.out.println(controller.getInfo("Satellite1"));
-        System.out.println(controller.getInfo("Satellite2"));
+        System.out.println(controller.getInfo("Satellite3"));
+
+        controller.simulate(60); 
+
+        System.out.println(controller.getInfo("Satellite3"));
+
+        controller.simulate(120); 
+
+        System.out.println(controller.getInfo("Satellite3"));
+
+        controller.simulate(150); 
+
+        System.out.println(controller.getInfo("Satellite3"));
+
+        controller.simulate(180); 
+
         System.out.println(controller.getInfo("Satellite3"));
 
     }

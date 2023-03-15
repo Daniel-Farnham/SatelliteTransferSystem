@@ -236,7 +236,6 @@ public class BlackoutController {
         for (Satellite satellite : satellites) {
             satellite.updatePosition();
         }
-        // TODO: Task 2a)
     }
 
     /**
