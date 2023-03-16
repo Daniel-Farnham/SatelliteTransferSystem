@@ -14,6 +14,7 @@ import unsw.components.Satellites.StandardSatellite;
 import unsw.components.Satellites.TeleportingSatellite;
 import unsw.components.Satellites.RelaySatellite;
 import unsw.components.Files.File;
+import unsw.components.GPS.GPS;
 import unsw.response.models.EntityInfoResponse;
 import unsw.response.models.FileInfoResponse;
 
@@ -233,9 +234,14 @@ public class BlackoutController {
     }
 
     public void simulate() {
+        String entityId = null; 
+
         for (Satellite satellite : satellites) {
             satellite.updatePosition();
+            entityId = satellite.getSatelliteId(); // am i getting the correct id? This might have to be communicableEntitiesInRange(satellite.getSatelliteId())
         }
+        // Can't remember if we need to add in a for loop for devices. I don't think so. 
+        communicableEntitiesInRange(entityId);
     }
 
     /**
@@ -248,9 +254,24 @@ public class BlackoutController {
         }
     }
 
+    /**
+     * 
+     * Takes in an id. 
+     */
     public List<String> communicableEntitiesInRange(String id) {
-        // TODO: Task 2 b)
-        return new ArrayList<>();
+        List <String> listCommunicableEntities = new ArrayList<>(); 
+        GPS gps = new GPS(devices, satellites);
+        //gps.connectableEntities(id);
+        for (Satellite satellite : satellites) {
+            if (satellite.getSatelliteId() == id) {
+                // Passes through the satellite to gps
+                listCommunicableEntities.addAll(gps.connectableEntities(satellite));
+            }
+            
+        }
+        
+        
+        return listCommunicableEntities;
     }
 
     public void sendFile(String fileName, String fromId, String toId) throws FileTransferException {

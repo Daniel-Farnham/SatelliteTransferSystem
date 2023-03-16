@@ -56,6 +56,8 @@ public abstract class Satellite {
     // The abstract method updatePosition() that will be implemented by each subtype of Satellite
     public abstract void updatePosition();
 
+    //public abstract List<String> connectableEntities(String satellite_type);
+
     public void addSatelliteFile(String filename, String content) {
         files.add(new unsw.components.Files.File(filename, content));
     }

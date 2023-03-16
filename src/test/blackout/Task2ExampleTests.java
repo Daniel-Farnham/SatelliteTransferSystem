@@ -216,11 +216,11 @@ public class Task2ExampleTests {
 
         System.out.println(controller.getInfo("Satellite3"));
 
-        controller.simulate(120); 
+        controller.simulate(100); 
 
         System.out.println(controller.getInfo("Satellite3"));
 
-        controller.simulate(150); 
+        controller.simulate(2); 
 
         System.out.println(controller.getInfo("Satellite3"));
 

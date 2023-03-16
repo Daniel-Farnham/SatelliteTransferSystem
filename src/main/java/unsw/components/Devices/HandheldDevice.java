@@ -3,7 +3,7 @@ package unsw.components.Devices;
 import unsw.utils.Angle;
 
 
-public class HandheldDevice extends Device {
+public class HandheldDevice extends Device implements DeviceInterface {
 
         private static final int MAX_RANGE = 50000;
 

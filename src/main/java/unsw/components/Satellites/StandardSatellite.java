@@ -1,7 +1,11 @@
 package unsw.components.Satellites;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import unsw.components.Files.File;
 import unsw.utils.Angle;
+import unsw.utils.MathsHelper;
 
 public class StandardSatellite extends Satellite {
     private static final int LINEAR_SPEED = 2500; // kilometres per minute
@@ -78,6 +82,30 @@ public class StandardSatellite extends Satellite {
         // angularVelocity * minute = radians 
     }
 
+    /* 
+    // might put this in seperate class 
+    public List<String> connectableEntities(String satellite_type) {
+        // Distance between satellite and other satellite
+        getDistance(satelliteHeight, satelliteAngle, double otherHeight,Angle otherAngle)
+        // Distance between satellite and device
+        getDistance(double satelliteHeight, Angle satelliteAngle, Angle deviceAngle);
+        // Determine if satellite is visible to other satellite 
+        isVisible(double satelliteHeight, Angle satelliteAngle, double otherHeight,Angle otherAngle)
+        // Determine is satellite is visible to device
+        isVisible(double satelliteHeight, Angle satelliteAngle, Angle deviceAngle);
+        
+        double SatelliteRange = getMaxRange();
+        if (satellite_type == "StandardSatellite") {
+            for (Device devices : device) {
+                getDistance(satelliteHeight, satelliteAngle, deviceAngle)
+                double minRange = Math.min(SatelliteRange, device.getDeviceRange)
+
+                if (device.getDeviceType() == "HandheldDevice" || device.getDeviceType() =="LaptopDevice")
+            }
+        }
+        return new ArrayList<>();
+    }
+    */
 
     public void updatePosition() {
         Angle angleChange = Angle.fromRadians(-getAngularVelocity() * 1); 
