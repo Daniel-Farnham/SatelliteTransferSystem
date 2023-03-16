@@ -3,7 +3,6 @@ package unsw.components.Devices;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import unsw.components.Files.File;
 import unsw.utils.Angle;
 

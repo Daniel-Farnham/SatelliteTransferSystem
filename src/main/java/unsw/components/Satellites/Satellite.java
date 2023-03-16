@@ -3,6 +3,7 @@ package unsw.components.Satellites;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import unsw.components.Files.File;
 import unsw.utils.Angle;
 
@@ -70,17 +71,6 @@ public abstract class Satellite {
             }
         }
     }
-
-    /* 
-    public void removeSatelliteFile(String filename) {
-        for (int i = 0; i < files.size(); i++) {
-            if (files.get(i).getFilename().equals(filename)) {
-                files.remove(i);
-                return;
-            }
-        }
-    }
-    */ 
 
     public List<File> getSatelliteFiles() {
         return files;

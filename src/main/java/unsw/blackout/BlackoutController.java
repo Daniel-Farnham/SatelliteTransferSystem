@@ -269,7 +269,13 @@ public class BlackoutController {
             }
             
         }
-        
+        // its not going to find it because we haven't passed in Devices. 
+
+        for (Device device : devices) {
+            if (device.getDeviceId() == id) {
+                listCommunicableEntities.addAll(gps.connectableEntitiesToDevice(device));
+            }
+        }
         
         return listCommunicableEntities;
     }

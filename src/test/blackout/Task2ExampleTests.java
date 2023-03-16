@@ -47,6 +47,22 @@ public class Task2ExampleTests {
         assertListAreEqualIgnoringOrder(Arrays.asList("DeviceD"), controller.communicableEntitiesInRange("Satellite3"));
     }
 
+    @Test 
+    public void testEntitiesInRangeCasually() {
+        BlackoutController controller = new BlackoutController(); 
+
+        //controller.createSatellite("Satellite1", "StandardSatellite", 1000 + RADIUS_OF_JUPITER, Angle.fromDegrees(320));
+        controller.createDevice("DeviceB", "HandheldDevice", Angle.fromDegrees(175));
+        controller.createDevice("DeviceC", "HandheldDevice", Angle.fromDegrees(175));
+        controller.createSatellite("Satellite1", "TeleportingSatellite", 1000 + RADIUS_OF_JUPITER, Angle.fromDegrees(195));
+        controller.createSatellite("Satellite3", "StandardSatellite", 2000 + RADIUS_OF_JUPITER, Angle.fromDegrees(195));
+
+        // Current problems: It returns the satellite itself when it shouldn't and I can't seem to add devices
+        // It connects to Relay Satellite but not Teleportation Satellite
+        System.out.println(controller.communicableEntitiesInRange("DeviceC"));
+
+    }
+
     @Test
     public void testSomeExceptionsForSend() {
         // just some of them... you'll have to test the rest

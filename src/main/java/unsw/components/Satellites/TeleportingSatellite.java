@@ -11,7 +11,6 @@ public class TeleportingSatellite extends Satellite {
     private static final int BYTES_PER_MINUTE_SEND = 10;
     private static final char T_CHARACTER = 't';
     private boolean isDirectionClockwise = false; 
-    //Device support? 
 
     public TeleportingSatellite(String id, Double height, Angle position) {
         super(id, "TeleportingSatellite", height, position);
