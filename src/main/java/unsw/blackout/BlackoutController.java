@@ -8,12 +8,14 @@ import java.util.Map;
 import unsw.components.Devices.Device;
 import unsw.components.Devices.HandheldDevice;
 import unsw.components.Devices.LaptopDevice;
+import unsw.blackout.FileTransferException.VirtualFileNotFoundException;
 import unsw.components.Devices.DesktopDevice;
 import unsw.components.Satellites.Satellite;
 import unsw.components.Satellites.StandardSatellite;
 import unsw.components.Satellites.TeleportingSatellite;
 import unsw.components.Satellites.RelaySatellite;
 import unsw.components.Files.File;
+import unsw.components.Files.FileCarrier;
 import unsw.components.GPS.GPS;
 import unsw.response.models.EntityInfoResponse;
 import unsw.response.models.FileInfoResponse;
@@ -25,6 +27,7 @@ import unsw.utils.Angle;
 public class BlackoutController {
     private List<Device> devices;
     private List<Satellite> satellites; 
+    private List<File> files; 
 
     public BlackoutController() {
         devices = new ArrayList<>();
@@ -43,6 +46,10 @@ public class BlackoutController {
      */
     public List<Satellite> getSatellites() {
         return satellites; 
+    }
+
+    public List<File> getFiles() {
+        return files;
     }
 
     /**
@@ -170,7 +177,7 @@ public class BlackoutController {
         }
 
         targetDevice.addFile(filename, content); 
-        System.out.println("File added succesfully");
+        
         
     }
 
@@ -238,10 +245,9 @@ public class BlackoutController {
 
         for (Satellite satellite : satellites) {
             satellite.updatePosition();
-            entityId = satellite.getSatelliteId(); // am i getting the correct id? This might have to be communicableEntitiesInRange(satellite.getSatelliteId())
         }
-        // Can't remember if we need to add in a for loop for devices. I don't think so. 
         communicableEntitiesInRange(entityId);
+        // Need to call method that progresses the files in transit. 
     }
 
     /**
@@ -261,16 +267,12 @@ public class BlackoutController {
     public List<String> communicableEntitiesInRange(String id) {
         List <String> listCommunicableEntities = new ArrayList<>(); 
         GPS gps = new GPS(devices, satellites);
-        //gps.connectableEntities(id);
         for (Satellite satellite : satellites) {
             if (satellite.getSatelliteId() == id) {
-                // Passes through the satellite to gps
                 listCommunicableEntities.addAll(gps.connectableEntities(satellite));
             }
             
         }
-        // its not going to find it because we haven't passed in Devices. 
-
         for (Device device : devices) {
             if (device.getDeviceId() == id) {
                 listCommunicableEntities.addAll(gps.connectableEntitiesToDevice(device));
@@ -280,7 +282,21 @@ public class BlackoutController {
         return listCommunicableEntities;
     }
 
+    /**
+     * This method is incomplete and buggy. 
+     * Creates a FileCarrier class which communicates with the relevant entity and associated subclasses
+     * FileCarrier organises a file to begin sending and checks for bandwith/storage parameters. 
+     */
     public void sendFile(String fileName, String fromId, String toId) throws FileTransferException {
+        String returnedExceptionString;
+
+        FileCarrier fileCarrier = new FileCarrier(fromId, toId, fileName, devices, satellites, files);
+        returnedExceptionString = fileCarrier.sendFile(fromId, toId, fileName);
+
+        if (returnedExceptionString == "NoRoomOnSatellite") {
+
+        }
+        
         // TODO: Task 2 c)
     }
 

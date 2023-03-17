@@ -143,7 +143,7 @@ public class Task2ExampleTests {
         // ... and so on.
     }
 
-    @Test
+        @Test
     public void testRelayMovement() {
         // Task 2
         // Example from the specification

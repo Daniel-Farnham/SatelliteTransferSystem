@@ -42,7 +42,6 @@ public class TeleportingSatellite extends Satellite {
         double angularVelocity = linearSpeed/radius; 
         return angularVelocity; 
 
-        // angularVelocity * minute = radians 
     }
 
     public void updatePosition() {
@@ -71,7 +70,65 @@ public class TeleportingSatellite extends Satellite {
                 setPosition(newPosition);
             }
         }  
-
     }
+
+    // Below methods were part of the incomplete sendFile and have been commented out to prevent compilation errors.
+    public boolean getTransferComplete() {
+        return false; 
+    }
+
+    public boolean canStoreFile(String content) {
+        /* 
+        if (filesStored >= MAX_FILES || bytesStored + content.length() > MAX_BYTES) {
+            return false;
+        }
+        return true;
+        */
+        return false; 
+    }
+
+
+    public String sendBytes(String filename, String content) {
+        /* 
+        boolean transferComplete;
+        char[] fileContent = content.toCharArray();
+        String currByte = "";
+        
+        if (byteIndex < content.length()) {
+            currByte += fileContent[byteIndex]; 
+            byteIndex++; 
+            //bytesStored--;
+            transferComplete = false;
+            
+        }
+        else if (byteIndex == content.length()) {
+            //filesStored--; 
+            //removeSatelliteFile(filename); //This might not be necessary
+            transferComplete = true; 
+        }
+        else {
+            transferComplete = true; 
+        }
+
+        return currByte; 
+        */
+        return "delete Me"; 
+    }
+
+    public void receiveBytes(boolean transferComplete, String filename, String bytesReceived) {        
+        /* 
+        String fileContent = "";
+    
+        if (transferComplete == false) {
+            fileContent += byteReceived; 
+            bytesStored++; 
+        }
+        else if (transferComplete == true) {
+            filesStored++; 
+            //addSatelliteFile(filename, fileContent); // This also may not be necessary 
+        }
+        */
+    }
+    
    
 }

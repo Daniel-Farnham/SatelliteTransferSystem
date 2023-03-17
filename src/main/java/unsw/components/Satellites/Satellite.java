@@ -3,7 +3,6 @@ package unsw.components.Satellites;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import unsw.components.Files.File;
 import unsw.utils.Angle;
 
@@ -54,27 +53,22 @@ public abstract class Satellite {
         this.position = position;
     }
 
-    // The abstract method updatePosition() that will be implemented by each subtype of Satellite
-    public abstract void updatePosition();
-
-    //public abstract List<String> connectableEntities(String satellite_type);
-
-    public void addSatelliteFile(String filename, String content) {
-        files.add(new unsw.components.Files.File(filename, content));
-    }
-
-    public void removeSatelliteFile(String filename) {
-        for (int i = 0; i < files.size(); i++) {
-            if (files.get(i).getFilename().equals(filename)) {
-                files.remove(i);
-                return;
-            }
-        }
-    }
-
     public List<File> getSatelliteFiles() {
         return files;
     }
 
+    public abstract void updatePosition();
+
+    public abstract boolean getTransferComplete(); 
+
+    public abstract boolean canStoreFile(String content);
+    
+    public abstract String sendBytes(String filename, String content);
+
+    public abstract void receiveBytes(boolean transferComplete, String filename, String bytesReceived);
+    
+    public void addSatelliteFile(String filename, String content) {
+        files.add(new unsw.components.Files.File(filename, content));
+    }
 
 }
